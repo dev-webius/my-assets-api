@@ -55,12 +55,12 @@ pipeline {
                             APP_PID=$!
 
                             for i in {1..10}; do
+                                sleep 30
                                 if nc -z localhost $SERVER_PORT; then
                                     echo "Application started successfully."
                                     break
                                 fi
                                 echo "Wait for application to start..."
-                                sleep 10
                             done
 
                             if curl -s http://localhost:$SERVER_PORT/v1/hello | grep OK; then
