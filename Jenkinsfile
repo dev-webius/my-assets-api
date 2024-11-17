@@ -63,7 +63,7 @@ pipeline {
                                 sleep 30
                             done
 
-                            if curl -s http://localhost:$SERVER_PORT/hello | grep OK; then
+                            if curl -s http://localhost:$SERVER_PORT/v1/hello | grep OK; then
                                 echo "Application running test passed."
                             else
                                 echo "Application running test failed."
