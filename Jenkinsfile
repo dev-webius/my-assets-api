@@ -60,7 +60,7 @@ pipeline {
                                     break
                                 fi
                                 echo "Wait for application to start..."
-                                sleep 30
+                                sleep 10
                             done
 
                             if curl -s http://localhost:$SERVER_PORT/v1/hello | grep OK; then
