@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('App Build') {
             stages {
                 stage('Copy App Config') {
                     steps {
@@ -28,7 +28,7 @@ pipeline {
                 }
 
                 // NOTE: Need versioning, my-assets-{version}.jar
-                stage('Build') {
+                stage('App Build') {
                     steps {
                         sh '''
                             chmod +x ./gradlew
@@ -44,7 +44,7 @@ pipeline {
                 }
 
                 // NOTE: JAR file name should be generated automatically
-                stage('JAR Running Test') {
+                stage('App Running Test') {
                     environment {
                         BUILD_APP = "build/libs/my-assets-0.0.1-SNAPSHOT.jar"
                         SERVER_PORT = "18080"
@@ -73,6 +73,60 @@ pipeline {
 
                             kill $APP_PID
                         '''
+                    }
+                }
+            }
+        }
+
+        stage('Docker Deploy') {
+            stages {
+                stage('Docker Build') {
+                    steps {
+                        sleep 1
+                    }
+                }
+
+                stage('Docker Running Test') {
+                    steps {
+                        sleep 1
+                    }
+                }
+
+                stage('Docker Image Deploy') {
+                    steps {
+                        sleep 1
+                    }
+                }
+            }
+        }
+
+        stage('App Deploy') {
+            stages {
+                stage('Docker Image Pull') {
+                    steps {
+                        sleep 1
+                    }
+                }
+
+                stage('App Deploy') {
+                    steps {
+                        sleep 1
+                    }
+
+                    post {
+                        success {
+                            echo 'success'
+                        }
+
+                        failure {
+                            echo 'failure'
+                        }
+                    }
+                }
+
+                stage('Cleaning') {
+                    steps {
+                        sleep 1
                     }
                 }
             }
