@@ -3,14 +3,15 @@ package net.webius.myassets.learning.lombok;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@SpringBootTest @DisplayName("Lombok 어노테이션 학습 테스트")
 public class LombokAnnotationTest {
-    @Test
+    @Test @DisplayName("Lombok 어노테이션 적용 여부 테스트")
     public void testClass() {
         TestClass testClass = new TestClass("Tom", "Cruise");
 
