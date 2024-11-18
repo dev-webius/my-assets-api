@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {FieldEqualsConstraintValidator.class})
+@Constraint(validatedBy = FieldEqualsConstraintValidator.class)
 public @interface FieldEqualsConstraint {
     String message() default "{validation.constraints.FieldEqualsConstraint.message}";
     Class<?>[] groups() default {};
