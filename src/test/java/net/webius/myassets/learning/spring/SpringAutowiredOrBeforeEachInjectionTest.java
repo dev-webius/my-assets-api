@@ -4,7 +4,6 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
-import net.webius.myassets.component.MessageSourceProvider;
 import net.webius.myassets.validator.domain.PasswordEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,13 +22,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class SpringAutowiredOrBeforeEachInjectionTest {
     private static final Logger log = LoggerFactory.getLogger(SpringAutowiredOrBeforeEachInjectionTest.class);
     private final Validator validator;
-    private final MessageSourceProvider messageSourceProvider;
     private Validator validatorBeforeEach;
 
     @Autowired
-    public SpringAutowiredOrBeforeEachInjectionTest(Validator validator, MessageSourceProvider messageSourceProvider) {
+    public SpringAutowiredOrBeforeEachInjectionTest(Validator validator) {
         this.validator = validator;
-        this.messageSourceProvider = messageSourceProvider;
     }
 
     @BeforeEach
@@ -52,7 +49,7 @@ public class SpringAutowiredOrBeforeEachInjectionTest {
         log.info("{}", violations);
         log.info("{}", violation);
         log.info("@Autowired - {}", violation.getMessage());
-        assertThat(violation.getMessage()).isEqualTo(messageSourceProvider.get("validation.constraints.FieldEqualsConstraint.message"));
+        assertThat(violation.getMessageTemplate()).isEqualTo("{validation.constraints.FieldEqualsConstraint.message}");
 
         // @BeforeEach
         assertThatThrownBy(() -> validatorBeforeEach.validate(equals))

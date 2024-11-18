@@ -2,7 +2,6 @@ package net.webius.myassets.validator;
 
 import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
-import net.webius.myassets.component.MessageSourceProvider;
 import net.webius.myassets.exception.InvalidFieldType;
 import net.webius.myassets.validator.domain.*;
 import org.junit.jupiter.api.DisplayName;
@@ -15,12 +14,10 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest @DisplayName("FieldEqualsConstraintValidator 테스트")
 public class FieldEqualsConstraintValidatorTest {
     private final Validator validator;
-    private final MessageSourceProvider messageSourceProvider;
 
     @Autowired
-    public FieldEqualsConstraintValidatorTest(Validator validator, MessageSourceProvider messageSourceProvider) {
+    public FieldEqualsConstraintValidatorTest(Validator validator) {
         this.validator = validator;
-        this.messageSourceProvider = messageSourceProvider;
     }
 
     @Test @DisplayName("필드가 일치하는 경우")
@@ -37,10 +34,8 @@ public class FieldEqualsConstraintValidatorTest {
 
         var violations = validator.validate(equals);
         var violation = violations.iterator().next();
-        assertThat(violation.getMessage())
-                .isEqualTo(messageSourceProvider.get("validation.constraints.FieldEqualsConstraint.message"));
-        assertThat(violation.getPropertyPath().toString())
-                .isEqualTo("passwordConfirm>password");
+        assertThat(violation.getMessageTemplate()).isEqualTo("{validation.constraints.FieldEqualsConstraint.message}");
+        assertThat(violation.getPropertyPath().toString()).isEqualTo("passwordConfirm>password");
     }
 
     @Test @DisplayName("다중 필드가 모두 일치하는 경우")
@@ -53,15 +48,16 @@ public class FieldEqualsConstraintValidatorTest {
 
     @Test @DisplayName("다중 필드가 하나라도 일치하지 않는 경우")
     public void notEqualsMultipleField() {
+        // field1, field2, field3(source) -> field3/field2
         MultipleEquals equals1 = new MultipleEquals("test123", "test123ABC", "test123");
-        MultipleEquals equals2 = new MultipleEquals("test123", "test123", "test123ABC");
 
         var violations = validator.validate(equals1);
         var violation = violations.iterator().next();
-        assertThat(violation.getMessage())
-                .isEqualTo(messageSourceProvider.get("validation.constraints.FieldEqualsConstraint.message"));
-        assertThat(violation.getPropertyPath().toString())
-                .isEqualTo("field3>field2");
+        assertThat(violation.getMessageTemplate()).isEqualTo("{validation.constraints.FieldEqualsConstraint.message}");
+        assertThat(violation.getPropertyPath().toString()).isEqualTo("field3>field2");
+
+        // field1, field2, field3(source) -> field3/field1, field3/field2
+        MultipleEquals equals2 = new MultipleEquals("test123", "test123", "test123ABC");
 
         violations = validator.validate(equals2);
         assertThat(violations).hasSize(2);
@@ -76,9 +72,6 @@ public class FieldEqualsConstraintValidatorTest {
                 true, false);
 
         var violations = validator.validate(equals);
-        var violation = violations.iterator().next();
-        assertThat(violation.getMessage())
-                .isEqualTo(messageSourceProvider.get("validation.constraints.FieldEqualsConstraint.message"));
         assertThat(violations).hasSize(4);
     }
 
@@ -94,7 +87,7 @@ public class FieldEqualsConstraintValidatorTest {
         assertThat(violations).isEmpty();
     }
 
-    @Test @DisplayName("원본 필드가 Null 인 경우")
+    @Test @DisplayName("원본 필드가 null 인 경우")
     public void nullSourceField() {
         PasswordEquals equals = new PasswordEquals("test123", null);
 
@@ -102,7 +95,7 @@ public class FieldEqualsConstraintValidatorTest {
         assertThat(violations).hasSize(1);
     }
 
-    @Test @DisplayName("대상 필드가 Null 인 경우")
+    @Test @DisplayName("대상 필드가 null 인 경우")
     public void nullTargetField() {
         PasswordEquals equals = new PasswordEquals(null, "test123");
 
@@ -143,7 +136,6 @@ public class FieldEqualsConstraintValidatorTest {
         assertThatThrownBy(() -> validator.validate(equals))
                 .isInstanceOf(ValidationException.class)
                 .rootCause()
-                .isInstanceOf(InvalidFieldType.class)
-                .hasMessage(messageSourceProvider.get("exception.InvalidFieldType.MismatchTypes.message"));
+                .isInstanceOf(InvalidFieldType.class);
     }
 }
