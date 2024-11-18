@@ -94,6 +94,30 @@ public class FieldEqualsConstraintValidatorTest {
         assertThat(violations).isEmpty();
     }
 
+    @Test @DisplayName("원본 필드가 Null 인 경우")
+    public void nullSourceField() {
+        PasswordEquals equals = new PasswordEquals("test123", null);
+
+        var violations = validator.validate(equals);
+        assertThat(violations).hasSize(1);
+    }
+
+    @Test @DisplayName("대상 필드가 Null 인 경우")
+    public void nullTargetField() {
+        PasswordEquals equals = new PasswordEquals(null, "test123");
+
+        var violations = validator.validate(equals);
+        assertThat(violations).hasSize(1);
+    }
+
+    @Test @DisplayName("null 데이터를 비교하는 경우")
+    public void equalsNullField() {
+        PasswordEquals equals = new PasswordEquals(null, null);
+
+        var violations = validator.validate(equals);
+        assertThat(violations).isEmpty();
+    }
+
     @Test @DisplayName("필드를 찾지 못하는 경우")
     public void equalsNoSuchField() {
         EqualsNoSuchField equals = new EqualsNoSuchField();

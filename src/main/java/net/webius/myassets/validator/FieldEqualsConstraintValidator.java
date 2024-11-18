@@ -24,6 +24,7 @@ public class FieldEqualsConstraintValidator implements ConstraintValidator<Field
         context.disableDefaultConstraintViolation();
 
         Field target;
+        Object sourceVal, targetVal;
         try {
             Class<?> clazz = instance.getClass();
             Field[] fields = clazz.getDeclaredFields();
@@ -42,8 +43,12 @@ public class FieldEqualsConstraintValidator implements ConstraintValidator<Field
                             throw new InvalidFieldType(messageSourceProvider.get("exception.InvalidFieldType.MismatchTypes.message"));
                         }
 
+                        sourceVal = source.get(instance);
+                        targetVal = target.get(instance);
+
                         // 비교 대상과 equals() 비교
-                        if (!source.get(instance).equals(target.get(instance))) {
+                        if ((sourceVal == null && targetVal != null)
+                                || (sourceVal != null && !sourceVal.equals(targetVal))) {
                             isValid = false;
 
                             // 제약사항 위배 내용 추가
