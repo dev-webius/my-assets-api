@@ -1,4 +1,4 @@
-package net.webius.myassets.validator.domain;
+package net.webius.myassets.annotation.validator.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package net.webius.myassets.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import net.webius.myassets.validator.PasswordValidator;
+import net.webius.myassets.annotation.validator.PasswordValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

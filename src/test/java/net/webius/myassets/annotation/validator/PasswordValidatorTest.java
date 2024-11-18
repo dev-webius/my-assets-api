@@ -1,7 +1,7 @@
-package net.webius.myassets.validator;
+package net.webius.myassets.annotation.validator;
 
 import jakarta.validation.Validator;
-import net.webius.myassets.validator.domain.MockPassword;
+import net.webius.myassets.annotation.validator.domain.MockPassword;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
-package net.webius.myassets.validator;
+package net.webius.myassets.annotation.validator;
 
 import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
+import net.webius.myassets.annotation.validator.domain.*;
 import net.webius.myassets.exception.InvalidFieldType;
-import net.webius.myassets.validator.domain.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

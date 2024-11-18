@@ -2,7 +2,7 @@ package net.webius.myassets.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import net.webius.myassets.validator.FieldEqualsConstraintValidator;
+import net.webius.myassets.annotation.validator.FieldEqualsConstraintValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

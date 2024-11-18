@@ -1,4 +1,4 @@
-package net.webius.myassets.validator;
+package net.webius.myassets.annotation.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

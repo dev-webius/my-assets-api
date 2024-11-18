@@ -1,4 +1,4 @@
-package net.webius.myassets.validator.domain;
+package net.webius.myassets.annotation.validator.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import net.webius.myassets.annotation.FieldEquals;
 
 @FieldEqualsConstraint
 @NoArgsConstructor @Getter @Setter
-public class EqualsNoSuchField {
-    @FieldEquals("unknownField")
+public class EqualsNoProvidedField {
+    @FieldEquals
     private String field;
 }
