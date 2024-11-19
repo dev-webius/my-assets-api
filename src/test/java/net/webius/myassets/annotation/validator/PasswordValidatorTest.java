@@ -26,8 +26,7 @@ public class PasswordValidatorTest {
         assertThat(violations).isEmpty();
     }
 
-    @Test
-    @DisplayName("비밀번호 공백 제약 조건 위배")
+    @Test @DisplayName("비밀번호 공백 제약 조건 위배")
     public void noSpace() {
         var password = new MockPassword("Abcd    efgh1!");
 
@@ -42,8 +41,8 @@ public class PasswordValidatorTest {
         // 8자 미만
         var underPassword = new MockPassword("Ab1!");
 
-        // 20자 초과
-        var overPassword = new MockPassword("Ab1!Ab1!Ab1!Ab1!Ab1!a");
+        // 16자 초과
+        var overPassword = new MockPassword("Ab1!Ab1!Ab1!Ab1!a");
 
         var passwords = new MockPassword[] {underPassword, overPassword};
         for (var password : passwords) {

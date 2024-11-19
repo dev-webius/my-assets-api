@@ -23,7 +23,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
                     .addConstraintViolation();
         }
 
-        if (trimmedValue.length() < 8 || trimmedValue.length() > 20) {
+        if (trimmedValue.length() < 8 || trimmedValue.length() > 16) {
             isValid = false;
 
             context
