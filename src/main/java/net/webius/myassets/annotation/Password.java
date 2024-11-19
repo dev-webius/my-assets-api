@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface Password {
-    String message() default "{validation.constraints.PasswordValidator.message}";
+    String message() default "{validation.constraints.Password.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

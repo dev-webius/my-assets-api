@@ -69,7 +69,7 @@ public class SignupReqTest {
 
         var violations = validator.validate(req);
         assertThat(violations)
-                .filteredOn(v -> v.getMessageTemplate().contains("validation.constraints.PasswordValidator"))
+                .filteredOn(v -> v.getMessageTemplate().contains("validation.constraints.Password"))
                 .hasSize(3); // Contains, Size, Space
     }
 

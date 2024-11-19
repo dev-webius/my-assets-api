@@ -19,7 +19,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             isValid = false;
 
             context
-                    .buildConstraintViolationWithTemplate("{validation.constraints.PasswordValidator.Space.message}")
+                    .buildConstraintViolationWithTemplate("{validation.constraints.Password.Space.message}")
                     .addConstraintViolation();
         }
 
@@ -27,7 +27,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             isValid = false;
 
             context
-                    .buildConstraintViolationWithTemplate("{validation.constraints.PasswordValidator.Size.message}")
+                    .buildConstraintViolationWithTemplate("{validation.constraints.Password.Size.message}")
                     .addConstraintViolation();
         }
 
@@ -35,7 +35,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             isValid = false;
 
             context
-                    .buildConstraintViolationWithTemplate("{validation.constraints.PasswordValidator.Contains.message}")
+                    .buildConstraintViolationWithTemplate("{validation.constraints.Password.Contains.message}")
                     .addConstraintViolation();
         }
 

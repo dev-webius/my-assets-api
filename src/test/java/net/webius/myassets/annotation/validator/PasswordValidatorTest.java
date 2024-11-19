@@ -33,7 +33,7 @@ public class PasswordValidatorTest {
 
         var violations = validator.validate(password);
         assertThat(violations)
-                .filteredOn(v -> v.getMessageTemplate().equals("{validation.constraints.PasswordValidator.Space.message}"))
+                .filteredOn(v -> v.getMessageTemplate().equals("{validation.constraints.Password.Space.message}"))
                 .isNotEmpty();
     }
 
@@ -49,7 +49,7 @@ public class PasswordValidatorTest {
         for (var password : passwords) {
             var violations = validator.validate(password);
             assertThat(violations)
-                    .filteredOn(v -> v.getMessageTemplate().equals("{validation.constraints.PasswordValidator.Size.message}"))
+                    .filteredOn(v -> v.getMessageTemplate().equals("{validation.constraints.Password.Size.message}"))
                     .isNotEmpty();
         }
     }
@@ -72,7 +72,7 @@ public class PasswordValidatorTest {
         for (var password : passwords) {
             var violations = validator.validate(password);
             assertThat(violations)
-                    .filteredOn(v -> v.getMessageTemplate().equals("{validation.constraints.PasswordValidator.Contains.message}"))
+                    .filteredOn(v -> v.getMessageTemplate().equals("{validation.constraints.Password.Contains.message}"))
                     .isNotEmpty();
         }
     }
