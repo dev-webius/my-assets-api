@@ -60,6 +60,27 @@ public class SignupReqTest {
                 .hasSize(1);
     }
 
+    @Test @DisplayName("@Size 제약 조건 위배")
+    public void invalidSize() {
+        var req = createValidObject();
+        req.setUsername("abcdefghijklmnopqrstu"); // 21 length
+
+        var violations = validator.validate(req);
+        assertThat(violations)
+                .filteredOn(v -> v.getMessageTemplate().equals("{jakarta.validation.constraints.Size.message}"))
+                .hasSize(1);
+    }
+
+    @Test @DisplayName("@IdentifierPattern 제약 조건 위배")
+    public void invalidIdentifier() {
+        var req = createValidObject();
+        req.setUsername("user#");
+
+        assertThat(validator.validate(req))
+                .filteredOn(v -> v.getMessageTemplate().equals("{validation.constraints.IdentifierPattern.message}"))
+                .hasSize(1);
+    }
+
     @Test
     @DisplayName("@Password 비밀번호 제약 조건 위배")
     public void invalidPassword() {

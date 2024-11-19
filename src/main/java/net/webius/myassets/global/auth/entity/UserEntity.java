@@ -20,7 +20,7 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     private UUID uuid = UUID.randomUUID();
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 20)
     private String username;
 
     @Column(nullable = false)
