@@ -3,6 +3,7 @@ package net.webius.myassets.global.auth.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import net.webius.myassets.global.auth.domain.UserRole;
 import net.webius.myassets.global.auth.domain.UserStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,6 +20,9 @@ public class UserEntity {
 
     @Column(nullable = false, unique = true)
     private UUID uuid = UUID.randomUUID();
+
+    @Column(nullable = false)
+    private UserRole role = UserRole.USER;
 
     @Column(nullable = false, unique = true, length = 20)
     private String username;
