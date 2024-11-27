@@ -3,7 +3,7 @@ package net.webius.myassets.annotation.validator;
 import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
 import net.webius.myassets.annotation.validator.domain.*;
-import net.webius.myassets.exception.InvalidFieldTypeExceptionTest;
+import net.webius.myassets.exception.InvalidFieldTypeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,7 +136,6 @@ public class FieldEqualsConstraintValidatorTest {
         assertThatThrownBy(() -> validator.validate(equals))
                 .isInstanceOf(ValidationException.class)
                 .rootCause()
-                .isInstanceOf(InvalidFieldTypeExceptionTest.class)
-                .hasMessage("test");
+                .isInstanceOf(InvalidFieldTypeException.class);
     }
 }

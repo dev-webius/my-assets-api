@@ -1,5 +1,6 @@
 package net.webius.myassets.config;
 
+import net.webius.myassets.component.MessageSourceProvider;
 import net.webius.myassets.global.auth.controller.AuthController;
 import net.webius.myassets.global.auth.service.SignupService;
 import net.webius.myassets.global.health.controller.WebHealthController;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Import(SecurityConfiguration.class) @EnableConfigurationProperties(AuthProperties.class)
-@MockBean(SignupService.class)
+@MockBean({SignupService.class, MessageSourceProvider.class})
 @WebMvcTest(controllers = {WebHealthController.class, AuthController.class}) @DisplayName("Spring Security 테스트")
 public class SecurityConfigurationTest {
     private static final Logger log = LoggerFactory.getLogger(SecurityConfigurationTest.class);

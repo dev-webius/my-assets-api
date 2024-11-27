@@ -52,16 +52,25 @@ public class SpringAutowiredOrBeforeEachInjectionTest {
         assertThat(violation.getMessageTemplate()).isEqualTo("{validation.constraints.FieldEqualsConstraint.message}");
 
         // @BeforeEach
-        assertThatThrownBy(() -> validatorBeforeEach.validate(equals))
-                .isInstanceOf(ValidationException.class)
-                .rootCause()
-                .isInstanceOf(NoSuchMethodException.class);
+        violations = validatorBeforeEach.validate(equals);
+        violation = violations.iterator().next();
+        log.info("{}", violations);
+        log.info("{}", violation);
+        log.info("@BeforeEach - {}", violation.getMessage());
+        assertThat(violation.getMessageTemplate()).isEqualTo("{validation.constraints.FieldEqualsConstraint.message}");
+        assertThat(violation.getMessage()).isEqualTo("{validation.constraints.FieldEqualsConstraint.message}");
     }
 
     /* @Autowired 주입 시
 2024-11-19T04:05:53.948+09:00  INFO 33384 --- [    Test worker] SpringAutowiredOrBeforeEachInjectionTest : [ConstraintViolationImpl{interpolatedMessage='mismatch fields.', propertyPath=passwordConfirm>password, rootBeanClass=class net.webius.myassets.validator.domain.PasswordEquals, messageTemplate='{validation.constraints.FieldEqualsConstraint.message}'}]
 2024-11-19T04:05:53.948+09:00  INFO 33384 --- [    Test worker] SpringAutowiredOrBeforeEachInjectionTest : ConstraintViolationImpl{interpolatedMessage='mismatch fields.', propertyPath=passwordConfirm>password, rootBeanClass=class net.webius.myassets.validator.domain.PasswordEquals, messageTemplate='{validation.constraints.FieldEqualsConstraint.message}'}
 2024-11-19T04:05:53.948+09:00  INFO 33384 --- [    Test worker] SpringAutowiredOrBeforeEachInjectionTest : @Autowired - mismatch fields.
+     */
+
+    /* FieldEqualsConstraintValidator 에서 MessageSourceProvider 주입을 제거하여 정상적인 Validating 수행이 가능하도록 변경됨
+2024-11-28T06:51:56.567+09:00  INFO 29924 --- [    Test worker] SpringAutowiredOrBeforeEachInjectionTest : [ConstraintViolationImpl{interpolatedMessage='{validation.constraints.FieldEqualsConstraint.message}', propertyPath=passwordConfirm>password, rootBeanClass=class net.webius.myassets.annotation.validator.domain.PasswordEquals, messageTemplate='{validation.constraints.FieldEqualsConstraint.message}'}]
+2024-11-28T06:51:56.567+09:00  INFO 29924 --- [    Test worker] SpringAutowiredOrBeforeEachInjectionTest : ConstraintViolationImpl{interpolatedMessage='{validation.constraints.FieldEqualsConstraint.message}', propertyPath=passwordConfirm>password, rootBeanClass=class net.webius.myassets.annotation.validator.domain.PasswordEquals, messageTemplate='{validation.constraints.FieldEqualsConstraint.message}'}
+2024-11-28T06:51:56.567+09:00  INFO 29924 --- [    Test worker] SpringAutowiredOrBeforeEachInjectionTest : @BeforeEach - {validation.constraints.FieldEqualsConstraint.message}
      */
 
     /* @BeforeEach 초기화 시 (MessageSourceProvider 주입으로 인해 Spring DI가 아닌 경우 정상적인 Validating 을 제공할 수 없음)
