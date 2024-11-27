@@ -6,4 +6,8 @@ import lombok.Setter;
 @Getter @Setter
 public class ErrorResponse {
     private String[] messages;
+
+    public void setMessages(String... messages) {
+        this.messages = messages;
+    }
 }

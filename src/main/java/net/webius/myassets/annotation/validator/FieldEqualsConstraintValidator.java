@@ -4,18 +4,11 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import net.webius.myassets.annotation.FieldEqualsConstraint;
 import net.webius.myassets.annotation.FieldEquals;
-import net.webius.myassets.component.MessageSourceProvider;
-import net.webius.myassets.exception.InvalidFieldType;
+import net.webius.myassets.exception.InvalidFieldTypeException;
 
 import java.lang.reflect.Field;
 
 public class FieldEqualsConstraintValidator implements ConstraintValidator<FieldEqualsConstraint, Object> {
-    private final MessageSourceProvider messageSourceProvider;
-
-    public FieldEqualsConstraintValidator(MessageSourceProvider messageSourceProvider) {
-        this.messageSourceProvider = messageSourceProvider;
-    }
-
     @Override
     public boolean isValid(Object instance, ConstraintValidatorContext context) {
         boolean isValid = true;
@@ -40,7 +33,7 @@ public class FieldEqualsConstraintValidator implements ConstraintValidator<Field
 
                         // 비교 대상 필드와 유형이 일치하지 않는 경우
                         if (!source.getType().equals(target.getType())) {
-                            throw new InvalidFieldType(messageSourceProvider.get("exception.InvalidFieldType.MismatchTypes.message"));
+                            throw new InvalidFieldTypeException(targetName);
                         }
 
                         sourceVal = source.get(instance);
