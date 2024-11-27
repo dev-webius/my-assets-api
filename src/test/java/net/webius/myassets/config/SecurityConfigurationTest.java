@@ -1,6 +1,7 @@
 package net.webius.myassets.config;
 
 import net.webius.myassets.global.auth.controller.AuthController;
+import net.webius.myassets.global.auth.service.SignupService;
 import net.webius.myassets.global.health.controller.WebHealthController;
 import net.webius.myassets.properties.AuthProperties;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.codec.Hex;
@@ -26,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Import(SecurityConfiguration.class) @EnableConfigurationProperties(AuthProperties.class)
+@MockBean(SignupService.class)
 @WebMvcTest(controllers = {WebHealthController.class, AuthController.class}) @DisplayName("Spring Security 테스트")
 public class SecurityConfigurationTest {
     private static final Logger log = LoggerFactory.getLogger(SecurityConfigurationTest.class);
