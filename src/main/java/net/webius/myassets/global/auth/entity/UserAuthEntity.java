@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 @Entity(name = "user_auth")
 @Getter @Setter
 public class UserAuthEntity {
-    @Id @JoinColumn @OneToOne
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+
+    @PrimaryKeyJoinColumn @OneToOne
     private UserEntity user;
 
-    @Column(nullable = false, length = 64)
-    private String password;
-
-    @Column(nullable = false, length = 64)
-    private String salt;
+    @Column(nullable = false, length = 192, columnDefinition = "char(192) not null")
+    private String hash;
 
     @Column(nullable = false) @CurrentTimestamp(source = SourceType.VM)
     private LocalDateTime updatedAt;

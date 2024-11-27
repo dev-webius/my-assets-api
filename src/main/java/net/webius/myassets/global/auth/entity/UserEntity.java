@@ -41,4 +41,7 @@ public class UserEntity {
 
     @Column
     private LocalDateTime deletedAt;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserAuthEntity auth;
 }
