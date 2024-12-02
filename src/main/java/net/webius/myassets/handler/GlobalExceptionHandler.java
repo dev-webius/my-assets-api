@@ -34,10 +34,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ManagedException.class)
     protected ResponseEntity<ErrorResponse> handleManagedException(ManagedException e) {
         ErrorResponse response = new ErrorResponse();
-        response.setMessages(messageSourceProvider.get(e.getTemplateName(), e.getArguments()));
+        response.setMessages(messageSourceProvider.get(e.getMessageTemplate(), e.getArguments()));
 
         log.error("{}", response);
 
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(Throwable.class)
+    protected ResponseEntity<ErrorResponse> handleThrowable(ManagedException e) {
+        ErrorResponse response = new ErrorResponse();
+        response.setMessages(messageSourceProvider.get(e.getTemplateName(), e.getArguments()));
+
+        log.error("{}", response);
+
+        return ResponseEntity.internalServerError().body(response);
     }
 }

@@ -9,11 +9,11 @@ public class ManagedException extends RuntimeException {
         super(message);
     }
 
-    protected final String getMessageTemplate() {
-        return "{exception." + getTemplateName() +  ".message}";
+    public final String getMessageTemplate() {
+        return "exception." + getTemplateName() +  ".message";
     }
 
-    protected final String getExceptionName() {
+    public final String getExceptionName() {
         String classFullName = this.getClass().getName();
         return classFullName.substring(classFullName.lastIndexOf('.') + 1);
     }
