@@ -1,5 +1,6 @@
 package net.webius.myassets.global.auth.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -19,14 +20,17 @@ public class SignupReq {
     @NotBlank
     @Size(max = 20)
     @IdentifierPattern
+    @Schema(example = "testuser")
     private String username;
 
     @NotBlank
     @Password
+    @Schema(example = "testPass12@")
     private String password;
 
     @NotBlank
     @FieldEquals("password")
+    @Schema(example = "testPass12@")
     private String passwordConfirm;
 
     @NotNull
