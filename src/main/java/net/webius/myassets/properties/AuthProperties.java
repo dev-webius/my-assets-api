@@ -1,13 +1,15 @@
 package net.webius.myassets.properties;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "my-assets.auth")
-public record AuthProperties(@NotNull String secret, Integer saltLength, Pbkdf2Properties pbkdf2) {
+public record AuthProperties(@NotBlank String secret,
+                             Integer saltLength,
+                             Pbkdf2Properties pbkdf2) {
     public static final Integer DEFAULT_SALT_LENGTH = 64;
 
     public AuthProperties {
@@ -19,7 +21,8 @@ public record AuthProperties(@NotNull String secret, Integer saltLength, Pbkdf2P
         }
     }
 
-    public record Pbkdf2Properties(Integer iterations, SecretKeyFactoryAlgorithm algorithm) {
+    public record Pbkdf2Properties(Integer iterations,
+                                   SecretKeyFactoryAlgorithm algorithm) {
         public static final Integer DEFAULT_ITERATIONS = 310000;
         public static final SecretKeyFactoryAlgorithm DEFAULT_ALGORITHM = SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256;
 
