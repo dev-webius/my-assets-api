@@ -6,6 +6,7 @@ import net.webius.myassets.global.auth.domain.UserStatus;
 import net.webius.myassets.global.auth.dto.SignupReq;
 import net.webius.myassets.global.auth.entity.UserAuthEntity;
 import net.webius.myassets.global.auth.entity.UserEntity;
+import net.webius.myassets.global.auth.exception.UsernameAlreadyUsingException;
 import net.webius.myassets.global.auth.repository.UserAuthRepository;
 import net.webius.myassets.global.auth.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class SignupService {
     private final UserAuthRepository userAuthRepository;
 
     @Transactional
-    public void signup(SignupReq signupReq) {
+    public void signup(SignupReq signupReq) throws UsernameAlreadyUsingException {
         // Username 중복 검증
         userDataService.verifyUniqueUsername(signupReq.getUsername());
 

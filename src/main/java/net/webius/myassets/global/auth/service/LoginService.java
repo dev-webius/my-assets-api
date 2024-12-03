@@ -1,6 +1,8 @@
 package net.webius.myassets.global.auth.service;
 
 import net.webius.myassets.global.auth.dto.LoginReq;
+import net.webius.myassets.global.auth.exception.PasswordMismatchException;
+import net.webius.myassets.global.auth.exception.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +15,7 @@ public class LoginService {
     }
 
     @Transactional
-    public void login(LoginReq loginReq) {
+    public void login(LoginReq loginReq) throws UsernameNotFoundException, PasswordMismatchException {
         // 사용자 조회
         var user = userDataService.findByUsername(loginReq.getUsername());
 
