@@ -6,11 +6,11 @@ import lombok.Setter;
 import java.util.Arrays;
 
 @Getter @Setter
-public class ErrorResponse {
-    private String message;
+public class ErrorValidationResponse {
+    private String[] messages;
 
     @Override
     public String toString() {
-        return "message=" + message;
+        return "messages=" + Arrays.toString(messages);
     }
 }
