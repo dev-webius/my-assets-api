@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
         ErrorResponse response = new ErrorResponse();
         response.setMessage(messageSourceProvider.get("exception.Throwable.message"));
 
-        log.error("Throwable: {} {}", response, e.getMessage());
+        log.error("Throwable: {} - {}", response, e.getMessage());
 
         return ResponseEntity.internalServerError().body(response);
     }
