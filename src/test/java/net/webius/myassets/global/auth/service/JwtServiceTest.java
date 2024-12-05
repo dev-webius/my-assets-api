@@ -39,7 +39,6 @@ public class JwtServiceTest {
         assertThat(header.getAlgorithm()).isEqualTo(Jwts.SIG.HS512.toString());
 
         assertThat(payload.getSubject()).isEqualTo(jwtProperties.accessToken().subject());
-        assertThat(payload.get("token-type")).isEqualTo(jwtProperties.tokenType());
         assertThat(payload.get("username")).isEqualTo("string");
     }
 

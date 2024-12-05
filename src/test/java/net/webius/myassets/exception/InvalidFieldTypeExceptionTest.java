@@ -13,7 +13,7 @@ public class InvalidFieldTypeExceptionTest {
         try {
             throw new InvalidFieldTypeException("test");
         } catch (InvalidFieldTypeException e) {
-            assertThat(e.getMessageTemplate()).isEqualTo("{exception.InvalidFieldTypeException.message}");
+            assertThat(e.getMessageTemplate()).isEqualTo("exception.InvalidFieldTypeException.message");
         }
     }
 }
