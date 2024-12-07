@@ -7,6 +7,7 @@ import net.webius.myassets.domain.ErrorValidationResponse;
 import net.webius.myassets.exception.ManagedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -38,7 +39,13 @@ public class GlobalExceptionHandler {
         var responseStatus = e.getClass().getAnnotation(ResponseStatus.class);
 
         ErrorResponse response = new ErrorResponse();
-        response.setMessage(messageSourceProvider.get(e.getMessageTemplate(), e.getArguments()));
+        String message;
+        try {
+            message = messageSourceProvider.get(e.getMessageTemplate(), e.getArguments());
+        } catch (NoSuchMessageException ignored) {
+            message = messageSourceProvider.get("exception.ManagedException.message");
+        }
+        response.setMessage(message);
 
         log.error("ManagedException[{}]: {}", responseStatus.value(), response);
 
