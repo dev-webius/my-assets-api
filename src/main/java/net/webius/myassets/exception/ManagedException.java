@@ -3,7 +3,7 @@ package net.webius.myassets.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class ManagedException extends RuntimeException {
     public ManagedException(String message) {
         super(message);
