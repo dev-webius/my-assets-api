@@ -85,6 +85,12 @@ public class OpenAPIConfiguration {
 
                     operation.getResponses().forEach((responseCode, apiResponse) -> {
                         MediaType mediaType;
+
+                        // Void 를 리턴하는 경우 건너뛰기
+                        if (apiResponse.getContent() == null) {
+                            return;
+                        }
+
                         if (responseCode.equals("400")) { // 400 Bad Request -> ErrorValidationResponse
                             mediaType = new MediaType().schema(resolveSchema(ErrorValidationResponse.class).schema); // NOTE: ErrorResponse 와 동시에 사용하는 방안 모색 필요
                         } else if (responseCode.startsWith("4") || responseCode.startsWith("5")) { // 4XX or 5XX -> ErrorResponse
