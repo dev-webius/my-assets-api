@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
-public class JwtSignatureFailureException extends ManagedException {
-    public JwtSignatureFailureException(String message) {
+public class JwtRequiredException extends ManagedException {
+    public JwtRequiredException(String message) {
         super(message);
     }
 }
