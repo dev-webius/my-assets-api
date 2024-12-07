@@ -30,6 +30,12 @@ public class UserDataService {
         }
     }
 
+    public void verifyUserExists(String username) throws UsernameNotFoundException {
+        if (!userRepository.existsByUsername(username)) {
+            throw new UsernameNotFoundException(username);
+        }
+    }
+
     public UserEntity findByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));

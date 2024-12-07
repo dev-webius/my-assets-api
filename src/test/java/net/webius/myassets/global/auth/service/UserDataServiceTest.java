@@ -63,7 +63,7 @@ public class UserDataServiceTest {
     @Test @DisplayName("사용자명 탐색")
     public void findByUsername() {
         String findUsername = "find_username";
-        assertThatThrownBy(() -> userDataService.findByUsername(findUsername))
+        assertThatThrownBy(() -> userDataService.verifyUserExists(findUsername))
                 .isInstanceOf(UsernameNotFoundException.class);
 
         SignupReq signupReq = new SignupReq();
@@ -73,6 +73,7 @@ public class UserDataServiceTest {
         signupReq.setBirthday(LocalDate.now());
         signupService.signup(signupReq);
 
-        userDataService.findByUsername(findUsername);
+        var user = userDataService.findByUsername(findUsername);
+        assertThat(user.getUsername()).isEqualTo(findUsername);
     }
 }
