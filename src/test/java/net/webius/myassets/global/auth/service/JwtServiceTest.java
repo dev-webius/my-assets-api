@@ -31,7 +31,7 @@ public class JwtServiceTest {
 
     @Test @DisplayName("Access Token 테스트")
     public void accessToken() {
-        var parsed = jwtService.extractAccessToken(accessToken);
+        var parsed = jwtService.extractToken(accessToken);
         var header = parsed.getHeader();
         var payload = parsed.getPayload();
 

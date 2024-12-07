@@ -1,8 +1,8 @@
 package net.webius.myassets.global.auth.service;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
+import net.webius.myassets.exception.JwtExpiredException;
 import net.webius.myassets.exception.JwtSignatureFailureException;
 import net.webius.myassets.global.auth.dto.UserSessionRes;
 import net.webius.myassets.properties.JwtProperties;
@@ -53,22 +53,22 @@ public class JwtService {
         return response;
     }
 
-    private Jws<Claims> extractToken(String token) throws JwtSignatureFailureException {
+    public Jws<Claims> extractToken(String token) throws JwtSignatureFailureException {
         try {
-            return getParser()
-                    .parseSignedClaims(token.replace(properties.tokenType() + " ", ""));
-        } catch (SignatureException e) {
-            throw new JwtSignatureFailureException(e.getMessage());
-        } catch (JwtException e) {
-            throw new RuntimeException(e);
+            if (token == null) {
+                throw new JwtSignatureFailureException("token is null");
+            }
+            return getParser().parseSignedClaims(
+                    token.replace(properties.tokenType() + " ", ""));
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new JwtSignatureFailureException(token + " : " + e.getMessage());
         }
     }
 
-    public Jws<Claims> extractAccessToken(String accessToken) throws JwtSignatureFailureException {
-        return extractToken(accessToken);
-    }
-
-    public Jws<Claims> extractRefreshToken(String refreshToken) throws JwtSignatureFailureException {
-        return extractToken(refreshToken);
+    public void verifyTokenExpired(Jws<Claims> parsed) throws JwtExpiredException {
+        var expiration = parsed.getPayload().getExpiration();
+        if (expiration.before(new Date())) {
+            throw new JwtExpiredException(expiration.toString());
+        }
     }
 }
