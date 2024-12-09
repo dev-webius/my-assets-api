@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import net.webius.myassets.user.my.dto.ApplyMyInfoReq;
+import net.webius.myassets.user.my.dto.MyInfoApplicationReq;
 import net.webius.myassets.user.my.dto.MyInfoRes;
 import net.webius.myassets.user.my.service.MyInfoService;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +30,8 @@ public class MyInfoController {
     @PutMapping
     @Operation(summary = "내 정보 수정하기")
     @ApiResponse(responseCode = "204", description = "성공")
-    public ResponseEntity<Void> applyMyInfo(@Valid @RequestBody ApplyMyInfoReq applyMyInfoReq) {
-        myInfoService.applyMyInfo(applyMyInfoReq);
+    public ResponseEntity<Void> applyMyInfo(@Valid @RequestBody MyInfoApplicationReq myInfoApplicationReq) {
+        myInfoService.applyMyInfo(myInfoApplicationReq);
         return ResponseEntity.noContent().build();
     }
 }

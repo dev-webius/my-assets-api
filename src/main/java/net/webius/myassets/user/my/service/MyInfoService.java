@@ -3,7 +3,7 @@ package net.webius.myassets.user.my.service;
 import lombok.RequiredArgsConstructor;
 import net.webius.myassets.global.auth.repository.UserRepository;
 import net.webius.myassets.global.auth.service.UserEntityUserDetailsService;
-import net.webius.myassets.user.my.dto.ApplyMyInfoReq;
+import net.webius.myassets.user.my.dto.MyInfoApplicationReq;
 import net.webius.myassets.user.my.dto.MyInfoRes;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +27,10 @@ public class MyInfoService {
     }
 
     @Transactional
-    public void applyMyInfo(ApplyMyInfoReq applyMyInfoReq) {
+    public void applyMyInfo(MyInfoApplicationReq myInfoApplicationReq) {
         var userEntity = userEntityUserDetailsService.getUserDetails().getUserEntity();
 
-        userEntity.setBirthday(applyMyInfoReq.getBirthday());
+        userEntity.setBirthday(myInfoApplicationReq.getBirthday());
         userRepository.save(userEntity);
     }
 }

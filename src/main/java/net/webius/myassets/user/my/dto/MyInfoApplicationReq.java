@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Getter @Setter
-public class ApplyMyInfoReq {
+public class MyInfoApplicationReq {
     @NotNull
     @PastOrPresent
     private LocalDate birthday;
