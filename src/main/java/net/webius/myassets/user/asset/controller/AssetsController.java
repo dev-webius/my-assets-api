@@ -90,11 +90,4 @@ public class AssetsController {
     public ResponseEntity<Void> getAssetStatistics(@PathVariable UUID id) {
         return ResponseEntity.internalServerError().build();
     }
-
-    @GetMapping("/{id}/installments")
-    @Operation(summary = "자산 할부 표시")
-    @ApiResponse(responseCode = "200", description = "성공")
-    public ResponseEntity<Void> getAssetInstallments(@PathVariable UUID id) {
-        return ResponseEntity.internalServerError().build();
-    }
 }
