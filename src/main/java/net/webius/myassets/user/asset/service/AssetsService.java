@@ -17,6 +17,7 @@ import net.webius.myassets.user.asset.repository.AssetRepository;
 import net.webius.myassets.user.asset.repository.AssetStatisticsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -79,7 +80,9 @@ public class AssetsService {
 
         assetRepository.save(assetEntity);
 
-        return new URI("/v1/assets/" + assetEntity.getUuid());
+        return UriComponentsBuilder
+                .fromUriString("/v1/assets/{id}")
+                .build(assetEntity.getUuid());
     }
 
     @Transactional
