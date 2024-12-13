@@ -1,27 +1,27 @@
 package net.webius.myassets.config;
 
 import lombok.RequiredArgsConstructor;
+import net.webius.myassets.filter.JwtAuthorizationFilter;
 import net.webius.myassets.global.auth.domain.UserRole;
-import net.webius.myassets.properties.AuthProperties;
+import net.webius.myassets.handler.JwtAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration @RequiredArgsConstructor
 public class SecurityConfiguration {
-    private final AuthProperties authProperties;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
                     registry
                             .requestMatchers(HttpMethod.GET, "/v1/hello").permitAll()
@@ -29,17 +29,14 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                             .anyRequest().hasRole(UserRole.USER.name());
                 })
-                .formLogin(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                        httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(jwtAuthenticationEntryPoint));
+        ;
 
         return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new Pbkdf2PasswordEncoder(
-                authProperties.secret(),
-                authProperties.saltLength(),
-                authProperties.pbkdf2().iterations(),
-                authProperties.pbkdf2().algorithm());
     }
 }

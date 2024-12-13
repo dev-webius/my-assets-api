@@ -26,6 +26,9 @@ public class AssetEntity {
     @Column(nullable = false)
     private AssetType type;
 
+    @Column(nullable = false)
+    private Long amount = 0L;
+
     @JoinColumn(nullable = false) @ManyToOne
     private AssetProviderEntity assetProvider;
 

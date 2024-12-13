@@ -1,8 +1,9 @@
-package net.webius.myassets.user.asset.entity;
+package net.webius.myassets.user.installment.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import net.webius.myassets.user.asset.entity.AssetProviderEntity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -24,7 +25,7 @@ public class AssetInstallmentProviderEntity {
     private String assetProviderCode;
 
     @Column(nullable = false)
-    private Integer totalMonth;
+    private Long totalMonth;
 
     @Column(nullable = false)
     private Long fee;
